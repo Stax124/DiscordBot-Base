@@ -1,13 +1,23 @@
-import logging
 import json
-import traceback
+import logging
 import os
+import traceback
 
 
 class Configuration():
-    "Class for maintaining configuration information and files"
+    """Class for maintaining configuration information and files"""
+
+    def __init__(self, filename: str):
+        self.CONFIG = os.path.expanduser(f"./config/{filename}.json")
+        self.config = {}
+        self.fallback = {
+            "prefix": ".",
+            "color": 0xffff00,
+        }
 
     def load(self):
+        """Load the config file"""
+
         try:
             logging.info(
                 f"Loading: {self.CONFIG}")
@@ -31,15 +41,9 @@ class Configuration():
                 return
         logging.info(f"Config loaded")
 
-    def __init__(self, filename: str):
-        self.CONFIG = os.path.expanduser(f"./config/{filename}.json")
-        self.config = {}
-        self.fallback = {
-            "prefix": ".",
-            "color": 0xffff00,
-        }
-
     def save(self):
+        """Save the config file"""
+
         try:
             with open(self.CONFIG, "w", encoding="utf-8") as f:
                 json.dump(self.config, f, indent=4,
@@ -49,7 +53,13 @@ class Configuration():
             logging.info(traceback.format_exc())
             logging.warning(f"Unable to save data to {self.CONFIG}")
 
-    def json_str(self):
+    def json_str(self) -> str:
+        """Get string representation of config
+
+        Returns:
+            str: Configuration as a JSON string
+        """
+
         return json.dumps(self.config)
 
     def __repr__(self):

@@ -1,15 +1,15 @@
-import discord
 import logging
+
+import discord
+from core.config import Configuration
 from discord.activity import Activity
 from discord.enums import ActivityType
 from discord.ext import commands
-from discord.utils import get
-from core.config import Configuration
 
 
 class Listeners(commands.Cog):
     "Listeners for bot, feel free to add your own"
-    
+
     def __init__(self, bot):
         self.bot = bot
 
