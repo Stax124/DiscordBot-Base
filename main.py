@@ -17,6 +17,8 @@ parser = argparse.ArgumentParser(
 parser.add_argument("-l", "--logging",  default="INFO",
                     choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"], help="Choose level of logging")
 parser.add_argument("-f", "--file", type=str, help="Filename for logging")
+
+# ! You need to set your token as an environment variable or just pass it as an argument
 parser.add_argument("--token", default=os.environ["TRINITY"], type=str,
                     help="Discord API token: Get yours at https://discord.com/developers/applications")
 args = parser.parse_args()
@@ -146,5 +148,4 @@ if __name__ == "__main__":
         bot.load_extension(extension)
         logging.info(f"{extension} loaded")
 
-    # ! You need to set your enviromental variable TRINITY to your bot token (or just rename the variable betwen the quotes) !
-    bot.run(os.environ["TRINITY"], reconnect=True)
+    bot.run(args.token, reconnect=True)
